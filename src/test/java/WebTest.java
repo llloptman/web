@@ -56,7 +56,7 @@ class WebTest {
     void ShouldWarnPhoneInvalidSymbols(){
         open("http://localhost:9999/");
         SelenideElement form = $("#root > div > form");
-        form.$("[data-test-id='name'] input").setValue("Василий");//восклицательный знак
+        form.$("[data-test-id='name'] input").setValue("Василий!");//восклицательный знак
         form.$("button").click();
         $(".input_invalid .input__sub").shouldHave(Condition.exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
