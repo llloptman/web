@@ -16,7 +16,6 @@ class WebTest {
     }
     @Test
     void shouldPass(){
-        open("http://localhost:9999/");
         SelenideElement form = $(".form");
         form.$("[data-test-id='name'] input").setValue("Василий");
         form.$("[data-test-id='phone'] input").setValue("+71234567890");
@@ -29,6 +28,8 @@ class WebTest {
     @Test
     void shouldWarnNameIsNull(){
         SelenideElement form = $(".form");
+        form.$("[data-test-id='phone'] input").setValue("+71234567890");
+        form.$(".checkbox__box").click();
         form.$("button").click();
         $(".input_invalid .input__sub").shouldHave(Condition.exactText
                 ("Поле обязательно для заполнения"));
@@ -37,6 +38,7 @@ class WebTest {
     void shouldWarnPhoneIsNull(){
         SelenideElement form = $(".form");
         form.$("[data-test-id='name'] input").setValue("Василий");
+        form.$(".checkbox__box").click();
         form.$("button").click();
         $(".input_invalid .input__sub").shouldHave(Condition.exactText
                 ("Поле обязательно для заполнения"));
@@ -54,6 +56,8 @@ class WebTest {
     void shouldWarnInvalidLatin(){
         SelenideElement form = $(".form");
         form.$("[data-test-id='name'] input").setValue("Vasilii");//латиница
+        form.$("[data-test-id='phone'] input").setValue("+71234567890");
+        form.$(".checkbox__box").click();
         form.$("button").click();
         $(".input_invalid .input__sub").shouldHave(Condition.exactText
                 ("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
@@ -62,6 +66,8 @@ class WebTest {
     void shouldWarnInvalidSymbols(){
         SelenideElement form = $(".form");
         form.$("[data-test-id='name'] input").setValue("Василий!");//восклицательный знак
+        form.$("[data-test-id='phone'] input").setValue("+71234567890");
+        form.$(".checkbox__box").click();
         form.$("button").click();
         $(".input_invalid .input__sub").shouldHave(Condition.exactText
                 ("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
@@ -70,6 +76,8 @@ class WebTest {
     void shouldWarnInvalidNumbers(){
         SelenideElement form = $(".form");
         form.$("[data-test-id='name'] input").setValue("Василий 1");//цифры
+        form.$("[data-test-id='phone'] input").setValue("+71234567890");
+        form.$(".checkbox__box").click();
         form.$("button").click();
         $(".input_invalid .input__sub").shouldHave(Condition.exactText
                 ("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
@@ -79,6 +87,7 @@ class WebTest {
         SelenideElement form = $(".form");
         form.$("[data-test-id='name'] input").setValue("Василий");
         form.$("[data-test-id='phone'] input").setValue("81234567890");//без +, с 8
+        form.$(".checkbox__box").click();
         form.$("button").click();
         $(".input_invalid .input__sub").shouldHave(Condition.exactText
                 ("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
